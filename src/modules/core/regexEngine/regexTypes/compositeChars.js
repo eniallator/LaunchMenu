@@ -22,11 +22,11 @@ export default class CompositeChars extends BaseType {
         let charsToRemove
 
         if (composition) {
-            this.flushCurrLiteral(state)
+            state.currLiteral.flush()
             state.exp = composition + state.exp.substring(2)
             charsToRemove = 0
         } else {
-            state.currLiteral += specialChar
+            state.currLiteral.str += specialChar
             charsToRemove = 2
         }
 

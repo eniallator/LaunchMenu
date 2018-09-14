@@ -1,6 +1,11 @@
 import BaseType from './baseType'
 
 export default class Range extends BaseType {
+    constructor() {
+        super()
+        this.type = 'range'
+    }
+
     testType(exp) {
         return exp[1] === '-'
     }
@@ -10,7 +15,7 @@ export default class Range extends BaseType {
             this.throwError('upper bound of range undefined')
 
         state.symbolTable.push({
-            type: 'range',
+            type: this.type,
             bounds: {lower: state.exp[0], upper: state.exp[2]},
         })
 

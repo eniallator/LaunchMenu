@@ -1,17 +1,20 @@
-import regexTypes from 
-
 export default class Parser {
-    flushCurrLiteral(state) {
-        state.symbolTable.push({type: 'literal', value: state.currLiteral})
-        state.currLiteral = ''
-    }
-
     translate(exp) {
         const state = {
-            currLiteral: '',
+            currLiteral: {
+                str: '',
+                flush: () => {
+                    this.symbolTable.push({
+                        type: 'literal',
+                        value: this.currLiteral.str,
+                    })
+                    this.currLiteral.str = ''
+                },
+            },
             exp: exp,
             symbolTable: [],
         }
+        state.currLiteral.flush.bind(state)
 
         while (state.exp) {
             let output = {charsToRemove: 1}
@@ -26,11 +29,11 @@ export default class Parser {
                 }
             }
 
-            if (!output.success) state.currLiteral += exp[0]
+            if (!output.success) state.currLiteral.str += exp[0]
             state.exp = state.exp.substring(output.charsToRemove)
         }
 
-        this.flushCurrLiteral(state)
+        state.currLiteral.flush()
         return state.symbolTable
     }
 }
