@@ -1,14 +1,13 @@
+import Parser from './parser'
+
 export default class RegexEngine {
     constructor(regex) {
-        this.regex = regex
+        const parser = new Parser()
+
+        this.symbolTable = parser.translate(regex)
     }
 
     match(string) {
         return string.includes(this.regex)
     }
 }
-
-let eng = new RegexEngine('test')
-
-console.log(eng.find('this is a test'))
-console.log(eng.find('this is a tes'))
