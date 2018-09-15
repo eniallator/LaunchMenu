@@ -1,7 +1,11 @@
 import SymbolTableManager from './symbolTableManager'
 
 export default class Parser {
-    translate(exp) {
+    constructor(REGEX_TYPES) {
+        this.REGEX_TYPES = REGEX_TYPES
+    }
+
+    _initState(exp) {
         const state = {
             currLiteral: {
                 str: '',
@@ -17,13 +21,17 @@ export default class Parser {
             exp,
         }
         state.currLiteral.flush.bind(state)
-        state.activeSymbolTable = state.wholeSymbolTable
+        return state
+    }
+
+    translate(exp) {
+        const state = this._initState(exp)
 
         while (state.exp) {
             let output = {charsToRemove: 1}
 
             for (let type of this.REGEX_TYPES) {
-                if (type.condition(state)) {
+                if (type.condition(state.exp)) {
                     output = type.execute(state)
 
                     if (output.success) {
