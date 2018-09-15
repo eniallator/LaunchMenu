@@ -6,7 +6,7 @@ export default class Parser {
             currLiteral: {
                 str: '',
                 flush: () => {
-                    this.symbolTable.push({
+                    this.symbolTableManager.head.push({
                         type: 'literal',
                         value: this.currLiteral.str,
                     })
@@ -36,7 +36,12 @@ export default class Parser {
             state.exp = state.exp.substring(output.charsToRemove)
         }
 
-        state.currLiteral.flush()
-        return state.symbolTable.getFull()
+        if (state.symbolTableManager.getLength() === 1) {
+            state.currLiteral.flush()
+            return state.symbolTableManager.pop(true)
+        } else
+            console.error(
+                '[REGEX_TRANSLATION] Error: too many symbol tables left over'
+            )
     }
 }

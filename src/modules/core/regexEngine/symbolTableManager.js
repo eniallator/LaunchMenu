@@ -7,7 +7,7 @@ export default class SymbolTableManager {
     }
 
     throwError(message) {
-        console.error('[SYMBOL_TABLE_MANAGER] Error: ' + message)
+        console.error('[REGEX_SYMBOL_TABLE_MANAGER] Error: ' + message)
     }
 
     _updateHead() {
@@ -21,8 +21,8 @@ export default class SymbolTableManager {
         } else this.throwError('push method didn\'t receive a SymbolTable type.')
     }
 
-    pop() {
-        if (this._symbolTableStack.length > 1) {
+    pop(forcePop) {
+        if (forcePop || this._symbolTableStack.length > 1) {
             const poppedSymbolTable = this._symbolTableStack.pop()
             this._updateHead()
             return poppedSymbolTable
@@ -30,5 +30,9 @@ export default class SymbolTableManager {
             this.throwError(
                 'pop method called when only the main symbol table left'
             )
+    }
+
+    getLength() {
+        return this._symbolTableStack.length
     }
 }
