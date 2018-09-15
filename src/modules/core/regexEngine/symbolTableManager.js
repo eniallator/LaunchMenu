@@ -1,0 +1,34 @@
+import SymbolTable from './symbolTable'
+
+export default class SymbolTableManager {
+    constructor() {
+        this._symbolTableStack = [new SymbolTable('main')]
+        this._updateHead()
+    }
+
+    throwError(message) {
+        console.error('[SYMBOL_TABLE_MANAGER] Error: ' + message)
+    }
+
+    _updateHead() {
+        this.head = this._symbolTableStack[this._symbolTableStack.length - 1]
+    }
+
+    push(newSymbolTable) {
+        if (newSymbolTable instanceof SymbolTable) {
+            this._symbolTableStack.push(newSymbolTable)
+            this._updateHead()
+        } else this.throwError('push method didn\'t receive a SymbolTable type.')
+    }
+
+    pop() {
+        if (this._symbolTableStack.length > 1) {
+            const poppedSymbolTable = this._symbolTableStack.pop()
+            this._updateHead()
+            return poppedSymbolTable
+        } else
+            this.throwError(
+                'pop method called when only the main symbol table left'
+            )
+    }
+}

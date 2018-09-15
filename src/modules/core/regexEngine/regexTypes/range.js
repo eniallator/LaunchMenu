@@ -14,7 +14,7 @@ export default class Range extends BaseType {
         if (state.exp.length < 3)
             this.throwError('upper bound of range undefined')
 
-        state.symbolTable.push({
+        state.symbolTableManager.head.push({
             type: this.type,
             bounds: {lower: state.exp[0], upper: state.exp[2]},
         })
