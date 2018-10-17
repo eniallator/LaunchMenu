@@ -1,6 +1,13 @@
+const isDigit = char => '0' <= char && char <= '9'
+const isLetter = char => 'a' <= char && char <= 'z'
+const isWordChar = char =>
+    isDigit(char) || isLetter(char.toLowerCase()) || char === '_'
+
 export default {
-    d: '[0-9]',
-    D: '[^0-9]',
-    w: '[A-Za-z0-9_]',
-    W: '[^A-Za-z0-9_]',
+    d: isDigit,
+    D: char => !isDigit(char),
+    a: isLetter,
+    A: char => !isLetter(char),
+    w: isWordChar,
+    W: char => !isWordChar(char),
 }

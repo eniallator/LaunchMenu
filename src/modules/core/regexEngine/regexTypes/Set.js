@@ -11,6 +11,8 @@ export default class Set extends BaseType {
         return exp[0] === '[' || exp[0] === ']'
     }
 
+    _matchFunc(text) {}
+
     _openSet(state) {
         state.symbolTableManager.push(new SymbolTable(this.type))
     }
@@ -20,7 +22,11 @@ export default class Set extends BaseType {
             this.throwError('unexpected close set symbol.')
 
         const currSetSymbolTable = state.symbolTableManager.pop()
-        state.symbolTable.head.push(currSetSymbolTable)
+        state.symbolTable.head.push({
+            type: this.type,
+            symbolTable: currSetSymbolTable,
+            matchFunc: this._matchfunc,
+        })
     }
 
     parseType(state) {

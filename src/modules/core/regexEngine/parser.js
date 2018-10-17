@@ -31,8 +31,8 @@ export default class Parser {
             let output = {charsToRemove: 1}
 
             for (let type of this.REGEX_TYPES) {
-                if (type.condition(state.exp)) {
-                    output = type.execute(state)
+                if (type.testType(state.exp)) {
+                    output = type.parseType(state)
 
                     if (output.success) {
                         break

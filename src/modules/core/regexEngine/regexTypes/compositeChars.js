@@ -5,6 +5,7 @@ export default class CompositeChars extends BaseType {
     constructor() {
         super()
         this.ESCAPE_CHAR = '`'
+        this.type = 'special'
     }
 
     testType(exp) {
@@ -23,8 +24,11 @@ export default class CompositeChars extends BaseType {
 
         if (composition) {
             state.currLiteral.flush()
-            state.exp = composition + state.exp.substring(2)
-            charsToRemove = 0
+            state.symbolTableManager.head.push({
+                type: this.type,
+                value: specialChar,
+                matchFunc: composition[specialChar],
+            })
         } else {
             state.currLiteral.str += specialChar
             charsToRemove = 2
