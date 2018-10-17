@@ -18,7 +18,12 @@ export default class SymbolTableManager {
         if (newSymbolTable instanceof SymbolTable) {
             this._symbolTableStack.push(newSymbolTable)
             this._updateHead()
-        } else this.throwError('push method didn\'t receive a SymbolTable type.')
+        } else if (newSymbolTable instanceof String) {
+            this._symbolTableStack.push(new SymbolTable(newSymbolTable))
+        } else
+            this.throwError(
+                'push method didn\'t receive a SymbolTable or string type.'
+            )
     }
 
     pop(forcePop) {

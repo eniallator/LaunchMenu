@@ -1,4 +1,3 @@
-import SymbolTable from '../symbolTable'
 import BaseType from './baseType'
 
 export default class Set extends BaseType {
@@ -14,7 +13,7 @@ export default class Set extends BaseType {
     _matchFunc(text) {}
 
     _openSet(state) {
-        state.symbolTableManager.push(new SymbolTable(this.type))
+        state.symbolTableManager.push(this.type)
     }
 
     _closeSet(state) {
