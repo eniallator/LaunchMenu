@@ -10,7 +10,7 @@ export default class Set extends BaseType {
         return exp[0] === '[' || exp[0] === ']'
     }
 
-    _matchFunc(text) {}
+    _matchFunc(text, symbolTableEntry) {}
 
     _openSet(state) {
         state.symbolTableManager.push(this.type)

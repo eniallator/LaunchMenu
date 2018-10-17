@@ -10,7 +10,7 @@ export default class Range extends BaseType {
         return exp[1] === '-'
     }
 
-    _matchFunc(text) {}
+    _matchFunc(text, symbolTableEntry) {}
 
     parseType(state) {
         if (state.exp.length < 3)
